@@ -1,0 +1,63 @@
+
+.jumbotron {
+  padding: 30px;
+  border-radius: 15px;
+}
+
+#bigJumbo {
+  background-color: #126bff;
+  padding: 30px;
+}
+
+.roundsJumbo {
+  background-color: #bdd4ff;
+  padding-bottom: 10px;
+}
+
+.roundsJumbo:last-of-type {
+  margin-bottom: 0px;
+}
+
+@media only screen and (max-width: 800px) {
+  #bigJumbo {
+    background-color: white;
+    padding: 0px;
+  }
+
+  .jumbotron {
+    padding: 15px;
+    border-width: 10px !important;
+    border-color: #126bff !important;
+  }
+
+}
+
+.personStyle {
+  background-color: #f7feff;
+  display: inline-block;
+  padding: 3px;
+  margin: 4px;
+  margin-top: 0px;
+}
+
+span.personStyle:hover {
+  background-color: #e00f00;
+}
+
+.roomStyle {
+  background-color: #c8cef7;
+  display: inline-block;
+  padding: 3px;
+  margin: 4px;
+  margin-top: 0px;
+}
+
+.roomStyle:hover {
+  background-color: #e00f00;
+}
+
+#roomSizeSlider {
+  min-width: 160px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
