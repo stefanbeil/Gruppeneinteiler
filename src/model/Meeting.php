@@ -103,7 +103,6 @@ class Meeting
     return $searchedPerson;
   }
 
-  //wird in Round.php benötigt
   public function updateMetPersons(): void {
     foreach ($this->participants as $participant) {
       foreach ($this->participants as $otherParticipant) {
@@ -114,7 +113,6 @@ class Meeting
     }
   }
 
-  //wird benötigt um in Round.php zu beurteilen, wie gut die Einteilung war
   public function countAlreadyMetEachOther(): int {
     $count = 0;
     foreach ($this->participants as $participant) {
