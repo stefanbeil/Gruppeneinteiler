@@ -17,7 +17,7 @@ class MasterController1 extends AbstractController
   {
     $fba = new FindBestAll1();
     list($bestRounds, $bestPersons, $newEncountersPerPersonPerRound) =
-      $fba->findBestResult($quantityPersons, $groupSize,
+      $fba->findBest($quantityPersons, $groupSize,
        $quantityGroups, $countRounds);
 
     $this->render("top.php", []);
