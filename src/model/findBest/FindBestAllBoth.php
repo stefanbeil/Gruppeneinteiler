@@ -1,20 +1,6 @@
 <?php
-abstract class FindBestBoth
+abstract class FindBestAllBoth
 {
-
-  public function render(String $file, $data)
-  {
-    extract($data);
-    include_once __DIR__ . "/../../view/$file";
-  }
-
-
-  public function logInfoToConsole($totalDuration, $cycles)
-  {
-    echo "<script>console.log('Dauer: " . $totalDuration . "' );</script>";
-    echo "<script>console.log('cycles/meetingsSearchDepth: " . $cycles . "' );</script>";
-  }
-
   public function totalCount($persons)
   {
     $count = 0;;
@@ -43,11 +29,17 @@ abstract class FindBestBoth
   {
     $rounds = array();
     for($j = 1; $j <= $countRounds; $j++) {
-      $fbr = new FindBestRound($roundsSearchDepth, $meetingsSearchDepth, $j, $persons, $meetingRooms);
-      $rounds[$j - 1] = $fbr->findBest();
+      $fbr = new FindBestRound($roundsSearchDepth, $meetingsSearchDepth);
+      $rounds[$j - 1] = $fbr->findBest($j, $persons, $meetingRooms);  //$j für Rundennummer
       $rounds[$j - 1]->counductRound();
     }
     return $rounds;
+  }
+
+  public function logInfoToConsole($totalDuration, $cycles)
+  {
+    echo "<script>console.log('Dauer: " . $totalDuration . "' );</script>";
+    echo "<script>console.log('cycles/meetingsSearchDepth: " . $cycles . "' );</script>";
   }
 
 }
