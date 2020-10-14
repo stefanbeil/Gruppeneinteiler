@@ -4,25 +4,25 @@ include_once __Dir__ . "/../MeetingRoom.php";
 include_once __Dir__ . "/../Meeting.php";
 include_once __Dir__ . "/../Round.php";
 include_once __Dir__ . "/../../controller/AbstractController.php";
-include_once __Dir__ . "/FindBestBoth.php";
+include_once __Dir__ . "/FindBestAllBoth.php";
 
 
-class FindBestAll1 extends FindBestBoth
+class FindBestAll1 extends FindBestAllBoth
 {
   public function __construct($searchTime = 1.5)
   {
-    $this->searchTime = 1.5;
+    $this->searchTime = $searchTime;
   }
 
   //findBestResult teilt alle Runden ein, versucht also das beste Gesamtergebnis zu finden
-  public function findBestResult($countPeople, $sizeRooms, $countRooms, $countRounds)  //schnellere Eingabemaske
+  public function findBest($countPeople, $sizeRooms, $countRooms, $countRounds)  //schnellere Eingabemaske
   {
     /* wenn beim Einteilen der Meetings nach gewissen Kriterien meherer Personen gleich gut in das Meeting passen,
     wird unter diesen Personen eine zufällige Person ausgewählt. Die Meetings werden auf diese Art mehrmals aufgefüllt.
     Das bisher beste Ergebnis wird sich dabei gemerkt. $meetingsSearchDepth gibt hierbei an, aus wie vielen Durchläufen
     sich das best Ergebnis gemerkt wird. $roundsSearchDepth macht das gleiche für die einzelnen Runden. */
-    $roundsSearchDepth = 1;
-    $meetingsSearchDepth = 1;
+    $roundsSearchDepth = 1;    // wird bei jedem 10. Schleifendurchlauf erhöht
+    $meetingsSearchDepth = 1;  // wird bei jedem Schleifendurchlauf erhöht
     $cycles = 0;
     /* in folgender do-while-Schleife wird das beste Gesamtergebnis von mehreren
     Durchläufen in $bestRounds und $bestPersons gespeichert. $roundCount und
