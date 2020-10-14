@@ -49,18 +49,6 @@ class Meeting
     return $leastKnownPersons;
   }
 
-  private function personHowKnownToGroup(string $personId): int
-  {
-    $countKnown = 0;
-    foreach ($this->participants as $groupMember) {
-      if ($groupMember->alreadyMet($personId)) {
-        //$countKnown += $groupMember->howOftenMet($personId); //wie oft haben sich die leute in der Gruppe sich schon bisher insgesamt mit der Person getroffen
-        $countKnown++;
-      }
-    }
-    return $countKnown;
-  }
-
   public function addParticipant(object $person): bool
   {
     if ($this->freeSpaces > 0) {
