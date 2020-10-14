@@ -9,8 +9,8 @@ class Round
     $this->roundNumber = $roundNumber;
     $this->participants = $participants;
     $this->meetingRooms = $meetingRooms;
-    $this->bestRoundCount = null;  //wird nicht verwendet
-    $this->meetings = array();//? $this->meetings
+    $this->bestRoundCount = null;  
+    $this->meetings = array();
   }
 
   public function counductRound() {
