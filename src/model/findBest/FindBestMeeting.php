@@ -2,27 +2,18 @@
 declare(strict_types=1);
 class FindBestMeeting
 {
-  public function __construct($meetingRoom, $leftPersons, $n, $roundNumber) {
-    $this->meetingRoom = $meetingRoom;
-    $this->leftPersons = $leftPersons;
-    $this->n = $n;
-    $this->roundNumber = $roundNumber;
+  public function __construct($searchDepth) {
+    $this->searchDepth = $searchDepth;
   }
 
-  public function findBest()
-  {
-    return $this->bestMeetingOutOfN($this->meetingRoom, $this->leftPersons, $this->n);
-  }
-
-
-  public function bestMeetingOutOfN($meetingRoom, $leftPersons, $n): array  //$n gibt die "Suchtiefe" an
+  public function findBest($meetingRoom, $leftPersons, $roundNumber): array  //$n gibt die "Suchtiefe" an
   {
       $bestCount = 1000000;
       $bestMeeting;
       $leftPersonsAfterMeeting;
-      for($i = 1; $i <= $n; $i++) {  //einzelen Meetings mehrmals befüllen und bestes Ergebnis weiterverwenden
+      for($i = 1; $i <= $this->searchDepth; $i++) {  //einzelen Meetings mehrmals befüllen und bestes Ergebnis weiterverwenden
         $availablePersons = $leftPersons;
-        $meeting = new Meeting($meetingRoom, $this->roundNumber); //wird ein neus Meeitng erstellt
+        $meeting = new Meeting($meetingRoom, $roundNumber); //wird ein neus Meeitng erstellt
         shuffle($availablePersons);
         //fillMeeting evtl besser in Meeting.php und dann mit $meeting->fillMeeting($availablePersons) aufrufen
         list($meeting, $availablePersons) = $this->fillMeeting($meeting, $availablePersons);  //die leute, die in $meeting gesteckt werden, werden aus $leftPersonsCopy entfernt
