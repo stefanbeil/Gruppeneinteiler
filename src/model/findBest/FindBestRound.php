@@ -7,34 +7,28 @@ include_once __Dir__ . "/../Round.php";
 class FindBestRound
 {
 
-  public function __construct(int $roundsSearchDepth, int $meetingsSearchDepth, int $roundNumber, array $participants, array $meetingRooms)
+  public function __construct(int $roundsSearchDepth, int $meetingsSearchDepth)
   {
     $this->roundsSearchDepth = $roundsSearchDepth;
     $this->meetingsSearchDepth = $meetingsSearchDepth;
-
-    $this->roundNumber = $roundNumber;
-    $this->participants = $participants;
-    $this->meetingRooms = $meetingRooms;
-    $this->bestRoundCount = null;
-    $this->meetings = array();
   }
 
-  public function findBest()
+  public function findBest($roundNumber, $participants, $meetingRooms)
   {
-    $this->fillRound($this->roundsSearchDepth, $this->meetingsSearchDepth);
-    $round = new Round($this->roundNumber, $this->participants, $this->meetingRooms);
-    $round->bestRoundCount = $this->bestRoundCount;
-    $round->meetings = $this->meetings;
+    list($bestMeetings, $bestRoundCount) = $this->fillRound($participants, $meetingRooms, $roundNumber);
+    $round = new Round($roundNumber, $participants, $meetingRooms);
+    $round->meetings = $bestMeetings;
+    $round->bestRoundCount = $bestRoundCount;
     return $round;
   }
 
-  public function fillRound(int $roundsSearchDepth, int $meetingsSearchDepth): void
+  public function fillRound($participants, $meetingRooms, $roundNumber): array
   {
     $bestRoundCount = 1000000;
     $bestMeetings = array();
-    for ($i = 1; $i <= $roundsSearchDepth; $i++) { //beste Runde aus $roundsSearchDepth Runden finden
-      $leftPersons = $this->participants;  //noch nicht in dieser Runde zugeteilte Personen
-      $meetingsBuffer = $this->searchMeetingsForRooms($this->meetingRooms, $leftPersons, $meetingsSearchDepth);
+    for ($i = 1; $i <= $this->roundsSearchDepth; $i++) { //beste Runde aus $roundsSearchDepth Runden finden
+      $leftPersons = $participants;  //noch nicht in dieser Runde zugeteilte Personen
+      $meetingsBuffer = $this->searchMeetingsForRooms($meetingRooms, $leftPersons, $this->meetingsSearchDepth, $roundNumber);
       $totalCount = 0;  //$totalCount gibt an wie viele Leute sich mehrmals treffen
       foreach ($meetingsBuffer as $meetingBuffer) {
         $totalCount += $meetingBuffer[1];
@@ -47,18 +41,17 @@ class FindBestRound
         break;
       }
     }
-    $this->bestRoundCount = $bestRoundCount;
-    $this->meetings = $bestMeetings;
+    return array($bestMeetings, $bestRoundCount);
   }
 
 
-  private function searchMeetingsForRooms($meetingRooms, $leftPersons, $meetingsSearchDepth)
+  private function searchMeetingsForRooms($meetingRooms, $leftPersons, $meetingsSearchDepth, $roundNumber)
   {
     $meetingsBuffer = [];
-    foreach ($this->meetingRooms as $meetingRoom) {  //für alle Räume ein gutes Meeting suchen
+    foreach ($meetingRooms as $meetingRoom) {  //für alle Räume ein gutes Meeting suchen
 
-      $fbm = new FindBestMeeting($meetingRoom, $leftPersons, $meetingsSearchDepth, $this->roundNumber);
-      list($bestMeeting, $countOfBestMeeting, $leftPersons) = $fbm->findBest();
+      $fbm = new FindBestMeeting($meetingsSearchDepth);
+      list($bestMeeting, $countOfBestMeeting, $leftPersons) = $fbm->findBest($meetingRoom, $leftPersons, $roundNumber);
 
       $meetingsBuffer[] = array($bestMeeting, $countOfBestMeeting);
     }
