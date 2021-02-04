@@ -14,7 +14,7 @@ class FindBestAll1 extends FindBestAllBoth
     $this->searchTime = $searchTime;
   }
 
-  //findBestResult teilt alle Runden ein, versucht also das beste Gesamtergebnis zu finden
+  //findBest teilt alle Runden ein, versucht also das beste Gesamtergebnis zu finden
   public function findBest($countPeople, $sizeRooms, $countRooms, $countRounds)  //schnellere Eingabemaske
   {
     /* wenn beim Einteilen der Meetings nach gewissen Kriterien meherer Personen gleich gut in das Meeting passen,

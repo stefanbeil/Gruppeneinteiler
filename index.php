@@ -20,7 +20,11 @@ if (isset($_GET['quantityPersons']) && isset($_GET['groupSize'])
   $quantityGroups = min(intval(htmlspecialchars($_GET['quantityGroups'])), $MAX_QUANTITY_GROUPS);
   $countRounds = min(intval(htmlspecialchars($_GET['rounds'])), $MAX_COUNT_ROUNDS);
 
-  $mastercontroller1->renderResults($quantityPersons, $groupSize, $quantityGroups, $countRounds);
+  list($bestRounds, $bestPersons, $newEncountersPerPersonPerRound) =
+    $mastercontroller1->getResults($quantityPersons, $groupSize, $quantityGroups, $countRounds);
+
+  $mastercontroller1->renderResults($quantityPersons, $groupSize, $quantityGroups, $countRounds,
+      $bestRounds, $bestPersons, $newEncountersPerPersonPerRound);
 } else {
   $mastercontroller1->renderNoResults();
 }

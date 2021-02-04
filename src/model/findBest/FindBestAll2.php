@@ -13,7 +13,7 @@ class FindBestAll2 extends FindBestAllBoth
   {
     $this->searchTime = $searchTime;
   }
-  /*siehe Kommentare bei findBestResult
+  /*siehe Kommentare bei findBest
   in FindBestAll1.php für mehr Details*/
   public function findBest(array $people, array $rooms, $countRounds)  //genauere Eingabemaske
   {

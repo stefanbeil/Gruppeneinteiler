@@ -12,12 +12,17 @@ class MasterController2 extends AbstractController
   {
   }
 
-  function renderResults($people, $rooms, $countRounds)
+  function getResults($people, $rooms, $countRounds)
   {
     $fba = new FindBestAll2();
     list($bestRounds, $bestPersons, $newEncountersPerPersonPerRound) =
       $fba->findBest($people, $rooms, $countRounds);
+    return array($bestRounds, $bestPersons, $newEncountersPerPersonPerRound);
+  }
 
+  function renderResults($people, $rooms, $countRounds,
+    $bestRounds, $bestPersons, $newEncountersPerPersonPerRound)
+  {
     $this->render("top.php", []);
     $this->render("parameters2.php", [
         "bestRounds" => $bestRounds,

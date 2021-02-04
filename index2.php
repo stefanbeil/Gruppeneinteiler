@@ -13,7 +13,12 @@ $mastercontroller2 = new MasterController2();
 
 if ((count($people) > 1) && (count($rooms) > 0) && isset($_GET['rounds'])) {
   $countRounds = min(intval(htmlspecialchars($_GET['rounds'])), $MAX_COUNT_ROUNDS);
-  $mastercontroller2->renderResults($people, $rooms, $countRounds);
+
+  list($bestRounds, $bestPersons, $newEncountersPerPersonPerRound) =
+    $mastercontroller2->getResults($people, $rooms, $countRounds);
+    
+  $mastercontroller2->renderResults($people, $rooms, $countRounds,
+    $bestRounds, $bestPersons, $newEncountersPerPersonPerRound);
 } else {
   $mastercontroller2->renderNoResults();
 }
